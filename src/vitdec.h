@@ -4,12 +4,13 @@
 #include <algorithm>
 #include <deque>
 
+typedef std::vector<bool> bool_vect;
 
 class Encoder
 {
 public:
 
-	std::vector<bool> encode(const std::vector<bool> &input);
+	bool_vect encode(const bool_vect &input);
 
 private:
 	const uint8_t R = 2;
@@ -23,7 +24,7 @@ class Decoder
 {
 public:
 
-	std::vector<bool> decode(const std::vector<bool> &input);
+	bool_vect decode(const bool_vect &input);
 	
 private:
 
@@ -35,16 +36,16 @@ private:
 
 
 	std::deque<uint8_t> currnet_way;
-	std::vector<bool> current_decoded_sequence;
+	bool_vect current_decoded_sequence;
 
 	std::deque <std::deque<std::deque<uint8_t>>> ways;
-	std::deque <std::deque< std::vector<bool>>> decoded_sequences;
+	std::deque <std::deque<bool_vect>> decoded_sequences;
 
 	std::deque<std::deque<uint32_t>> costs_ways;
 	std::deque<uint32_t> count_of_ways;
 
-	std::vector<bool> bits;
-	std::vector<bool> inpt;
+	bool_vect bits;
+	bool_vect inpt;
 
 
 	const int core[4][4] = {
@@ -57,8 +58,8 @@ private:
 
 	void build_ways(uint8_t point, int current_deep, int max_deep);
 	void delete_ways();
-	void way_to_bits(std::vector<bool> &bits, const std::deque<uint8_t> &way);
-	uint32_t hamming_distance(const std::vector<bool> x, const std::vector<bool> y, uint32_t len);
+	void way_to_bits(bool_vect &bits, const std::deque<uint8_t> &way);
+	uint32_t hamming_distance(const bool_vect x, const bool_vect y, uint32_t len);
 
 
 };

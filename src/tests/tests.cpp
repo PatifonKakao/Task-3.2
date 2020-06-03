@@ -18,22 +18,22 @@
 
 TEST(encoder_test, stat_test_0)
 {
-	std::vector<bool> input0 = {};
+	bool_vect input0 = {};
 
-	std::vector<bool> input1 = { 0,0,0,0};
-	std::vector<bool> input2 = { 1,1,1,1,1};
+	bool_vect input1 = { 0,0,0,0};
+	bool_vect input2 = { 1,1,1,1,1};
 
-	std::vector<bool> input3 = { 0,0 };
-	std::vector<bool> input4 = { 1,1 };
+	bool_vect input3 = { 0,0 };
+	bool_vect input4 = { 1,1 };
 
 
-	std::vector<bool> coderef0 = {};
+	bool_vect coderef0 = {};
 
-	std::vector<bool> coderef1 = { 0,0,0,0,0,0,0,0 };
-	std::vector<bool> coderef2 = { 1,1,1,0,0,1,0,1,0,1 };
+	bool_vect coderef1 = { 0,0,0,0,0,0,0,0 };
+	bool_vect coderef2 = { 1,1,1,0,0,1,0,1,0,1 };
 
-	std::vector<bool> coderef3 = { 0,0,0,0 };
-	std::vector<bool> coderef4 = { 1,1,1,0 };
+	bool_vect coderef3 = { 0,0,0,0 };
+	bool_vect coderef4 = { 1,1,1,0 };
 
 	Encoder enc;
 
@@ -47,15 +47,15 @@ TEST(encoder_test, stat_test_0)
 
 TEST(encoder_test, stat_test_1)
 {
-	std::vector<bool> input1 = { 1,0,0,0,0,0,0,0 };
-	std::vector<bool> input2 = { 1,1,0,1,1,0,0,1 };
+	bool_vect input1 = { 1,0,0,0,0,0,0,0 };
+	bool_vect input2 = { 1,1,0,1,1,0,0,1 };
 
-	std::vector<bool> input3 = { 0,0,1,1,1,0,1,1,0,0,0,1,0,1,0,1,0,1,1,1,1 };
+	bool_vect input3 = { 0,0,1,1,1,0,1,1,0,0,0,1,0,1,0,1,0,1,1,1,1 };
 
-	std::vector<bool> coderef1 = { 1,1,0,1,1,1,0,0,0,0,0,0,0,0,0,0 };
-	std::vector<bool> coderef2 = { 1,1,1,0,1,0,0,0,1,0,1,0,1,1,1,1 };
+	bool_vect coderef1 = { 1,1,0,1,1,1,0,0,0,0,0,0,0,0,0,0 };
+	bool_vect coderef2 = { 1,1,1,0,1,0,0,0,1,0,1,0,1,1,1,1 };
 
-	std::vector<bool> coderef3 = { 0,0,0,0,1,1,1,0,0,1,1,0,0,0,1,0,1,0,1,1,
+	bool_vect coderef3 = { 0,0,0,0,1,1,1,0,0,1,1,0,0,0,1,0,1,0,1,1,
 	0,0,1,1,0,1,0,0,0,1,0,0,0,1,0,0,1,0,0,1,0,1 };
 
 	Encoder enc;
@@ -70,10 +70,10 @@ TEST(encoder_test, stat_test_1)
 
 TEST(decoder_test, stat_test_1)
 {
-	std::vector<bool> input1 = { 1,0,0,0,0,0,0,0 };
-	std::vector<bool> input2 = { 1,1,0,1,1,0,0,1 };
+	bool_vect input1 = { 1,0,0,0,0,0,0,0 };
+	bool_vect input2 = { 1,1,0,1,1,0,0,1 };
 
-	std::vector<bool> input3 = { 0,0,1,1,1,0,1,1,0,0,0,1,0,1,0,1,0,1,1,1,1 };
+	bool_vect input3 = { 0,0,1,1,1,0,1,1,0,0,0,1,0,1,0,1,0,1,1,1,1 };
 
 	Encoder enc;
 
@@ -92,11 +92,11 @@ TEST(decoder_test, stat_test_1)
 
 TEST(decoder_test, stat_test_2)
 {
-	std::vector<bool> input0 = {};
+	bool_vect input0 = {};
 
-	std::vector<bool> input1 = { 0,0,0,0 };
-	std::vector<bool> input2 = { 1,1,1,1,1,1};
-	std::vector<bool> input3 = { 1, 1, 1};
+	bool_vect input1 = { 0,0,0,0 };
+	bool_vect input2 = { 1,1,1,1,1,1};
+	bool_vect input3 = { 1, 1, 1};
 
 
 	Encoder enc;
@@ -124,7 +124,7 @@ TEST(decoder_test, rand_test_1)
 	srand(time(NULL));
 
 	auto size = rand() % 30 + 3;
-	std::vector<bool> input(size);
+	bool_vect input(size);
 	for (auto &v : input)
 		v = rand() % 2;
 
@@ -143,7 +143,7 @@ TEST(decoder_test, rand_error_test_1)
 {
 	srand(time(NULL));
 	auto size = rand() % 30 + 3;
-	std::vector<bool> input(size);
+	bool_vect input(size);
 	for (auto &v : input)
 		v = rand() % 2;
 
@@ -164,7 +164,7 @@ TEST(decoder_test, rand_error_test_2)
 {
 	srand(time(NULL));
 	auto size = rand() % 30 + 3;
-	std::vector<bool> input(size);
+	bool_vect input(size);
 	for (auto &v : input)
 	{
 		v = rand() % 2;
@@ -197,7 +197,6 @@ TEST(decoder_test, rand_error_test_2)
 
 int main(int argc, char* argv[])
 {
-
 
     ::testing::InitGoogleTest(&argc, argv);
 

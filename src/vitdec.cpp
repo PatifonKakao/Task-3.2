@@ -1,6 +1,7 @@
 #include "vitdec.h"
 
-std::vector<bool> Encoder::encode(const std::vector<bool> &input)
+
+bool_vect Encoder::encode(const bool_vect &input)
 {
 	//G1 = 1 + x^2
 	//G2 = 1 + x + x^2
@@ -10,8 +11,8 @@ std::vector<bool> Encoder::encode(const std::vector<bool> &input)
 	if (input.size() < P)
 		throw std::length_error("Sequence too short");
 
-	std::vector<bool> output(input.size() * R);
-	std::vector<bool> buf = input;
+	bool_vect output(input.size() * R);
+	bool_vect buf = input;
 	buf.insert(buf.begin(), P, false);
 
 	auto t = 0;
@@ -25,11 +26,7 @@ std::vector<bool> Encoder::encode(const std::vector<bool> &input)
 }
 
 
-
-
-
-
-std::vector<bool> Decoder::decode(const std::vector<bool> &input)
+bool_vect Decoder::decode(const bool_vect &input)
 {
 	if (input.size() == 0)
 		return {};
@@ -48,7 +45,6 @@ std::vector<bool> Decoder::decode(const std::vector<bool> &input)
 	costs_ways.resize(I);
 
 	build_ways(0, 0, NP);
-
 	delete_ways();
 
 	for (auto k = NP; k < output_size; ++k)
@@ -58,7 +54,9 @@ std::vector<bool> Decoder::decode(const std::vector<bool> &input)
 			count_of_ways.push_back(ways.at(i).size());
 
 		for (auto i = 0; i < I; ++i)
-			for (__int32 j = count_of_ways.at(i) - 1; j >= 0; --j)
+		{
+			__int32 current_size_count_of_way = count_of_ways.at(i) - 1;
+ 			for (__int32 j = current_size_count_of_way; j >= 0; --j)
 			{
 				currnet_way = ways.at(i).at(j);
 				current_decoded_sequence = decoded_sequences.at(i).at(j);
@@ -67,29 +65,29 @@ std::vector<bool> Decoder::decode(const std::vector<bool> &input)
 				costs_ways.at(i).erase(costs_ways.at(i).begin() + j);
 				build_ways(i, k, k + 1);
 			}
+		}
 
 		count_of_ways.clear();
 		delete_ways();
 	}
-
 
 	size_t min = std::numeric_limits<size_t>::max();
 	auto ind_i = 0;
 	auto ind_j = 0;
 
 	for (auto i = 0; i < I; ++i)
-		for (__int64 j = costs_ways.at(i).size() - 1; j >= 0; --j)
+	{
+		__int32 current_size_cost_way = costs_ways.at(i).size() - 1;
+		for (__int32 j = current_size_cost_way; j >= 0; --j)
 			if (min > costs_ways.at(i).at(j))
 			{
 				min = costs_ways.at(i).at(j);
 				ind_i = i;
 				ind_j = j;
 			}
-
-
+	}
 
 	return decoded_sequences.at(ind_i).at(ind_j);
-
 }
 
 
@@ -102,7 +100,7 @@ void Decoder::build_ways(uint8_t point, int current_deep, int max_deep)
 			{
 				currnet_way.at(current_deep) = core[point][i];
 				i >= 2 ? current_decoded_sequence.at(current_deep) = true :
-					current_decoded_sequence.at(current_deep) = false;
+					     current_decoded_sequence.at(current_deep) = false;
 				build_ways(i, current_deep + 1, max_deep);
 			}
 	}
@@ -114,6 +112,7 @@ void Decoder::build_ways(uint8_t point, int current_deep, int max_deep)
 		decoded_sequences.at(point).push_back(current_decoded_sequence);
 	}
 }
+
 
 void Decoder::delete_ways()
 {
@@ -131,10 +130,10 @@ void Decoder::delete_ways()
 			}
 
 	}
-
 }
 
-void Decoder::way_to_bits(std::vector<bool> &bits, const std::deque<uint8_t> &way)
+
+void Decoder::way_to_bits(bool_vect &bits, const std::deque<uint8_t> &way)
 {
 	bits.resize(2 * way.size());
 	auto j = 0;
@@ -143,11 +142,10 @@ void Decoder::way_to_bits(std::vector<bool> &bits, const std::deque<uint8_t> &wa
 		bits[j++] = 0b00000010 & way[i];
 		bits[j++] = 0b00000001 & way[i];
 	}
-
 }
 
 
-uint32_t Decoder::hamming_distance(const std::vector<bool> x, const std::vector<bool> y, uint32_t len)
+uint32_t Decoder::hamming_distance(const bool_vect x, const bool_vect y, uint32_t len)
 {
 	int distance = 0;
 	for (auto i = 0; i < len; ++i)
