@@ -13,8 +13,8 @@ public:
 	bool_vect encode(const bool_vect &input);
 
 private:
-	const uint8_t R = 2;
-	const uint8_t P = 2;
+	const uint8_t R = 2; // speed
+	const uint8_t P = 2; // maximum degree of a polynomial
 
 };
 
@@ -28,11 +28,11 @@ public:
 	
 private:
 
-	const uint8_t R = 2;
-	const uint8_t P = 2;
-	const uint8_t NP = 3;
+	const uint8_t R = 2; // speed
+	const uint8_t P = 2; // maximum degree of a polynomial
+	const uint8_t NP = 3; // maximum degree of a polynomial + 1
 
-	const uint8_t I = 4;
+	const uint8_t I = 4; // size of core matrix
 
 
 	std::deque<uint8_t> currnet_way;
